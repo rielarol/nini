@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>سایت من با چت‌بات ساده</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chatbox {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .chat-input button {
+      padding: 10px;
+      border: none;
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .message {
+      margin: 5px 0;
+    }
+
+    .user { text-align: right; color: #333; }
+    .bot { text-align: left; color: #4caf50; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center; padding: 40px;">خوش اومدی به سایت من</h1>
+
+  <div class="chatbox">
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="پیامت رو بنویس...">
+      <button onclick="sendMessage()">ارسال</button>
+    </div>
+  </div>
+
+  <script>
+    const chatMessages = document.getElementById("chat-messages");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.className = message ${sender};
+      msg.textContent = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const text = input.value.trim();
+      if (text === "") return;
+
+      addMessage(text, "user");
+      input.value = "";
+
+      setTimeout(() => {
+        let reply = "متوجه نشدم، لطفاً واضح‌تر بگو!";
+
+        if (/سلام/i.test(text)) reply = "سلام! خوش اومدی. چطور می‌تونم کمکت کنم؟";
+        else if (/خداحافظ/i.test(text)) reply = "خدانگهدار! امیدوارم دوباره ببینمت.";
+        else if (/قیمت|هزینه/i.test(text)) reply = "قیمت‌ها بستگی به پروژه دارن. لطفاً جزئیات بیشتری بگو.";
+        else if (/چه کار می‌کنی|چه خدماتی/i.test(text)) reply = "من یه چت‌بات ساده‌ام که می‌تونه سوالای معمولی رو جواب بده.";
+
+        addMessage(reply, "bot");
+      }, 500);
+    }
+  </script>
+</body>
+</html>
